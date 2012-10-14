@@ -1,0 +1,13 @@
+php_value "short_open_tag" "on"
+php_value "asp_tags" "on"
+RewriteEngine On
+RewriteRule ^$  browser.php [QSA,L]
+
+RewriteCond %{REQUEST_FILENAME}  -d
+RewriteRule  ^.*$  -  [L]
+
+RewriteCond %{REQUEST_FILENAME}  -f
+RewriteRule  ^.*$  -  [L]
+
+RewriteRule ^_setup$  setup.php [QSA,L]
+RewriteRule ^.*$  browser.php [QSA,L]

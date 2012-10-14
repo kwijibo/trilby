@@ -1,0 +1,48 @@
+#Trilby
+
+Trilby is an easy way to publish dynamic linked data. Just copy Trilby
+to your webserver and point your web browser to it. Fill in a short form
+naming your dataset and uploading your RDF file, and it's done!
+
+##Features
+
+* Free Text Search
+* Faceted Browsing
+* Path-based Query Language
+* Geo-search (find things near other things)
+* Linked Data - URIs that start with where you installed Trilby
+  content-negotiate to HTML, RDF/JSON, and Turtle
+* VoID Metadata.
+
+##Small
+
+Trilby aims to make it very easy to dynamically publish smaller
+datasets. Instead of SPARQL or a database server for storing the data, Trilby's
+backend, Raffles, uses a file-based storage system. This makes Trilby
+very simple to setup, and lets it query over small amounts of data
+quickly and efficiently. However it is not an appropriate choice for
+medium-to-large datasets.
+
+###How Small?
+
+ So far I have tried with RDF data files of up to
+about 30MB, and while queries are still reasonably fast, it does take
+several minutes to upload the file to Trilby.
+
+##Installation
+
+1. Use (Composer)[http://getcomposer.org] to download Trilby.
+2. Put it where you want on your webserver. (eg, in the web root folder,
+   or a sub directory).
+3. Point your browser to it.
+4. You should be redirected to `/_setup` where you can upload your RDF data
+   file, give your dataset a name and license, and choose prefixes for
+   your data's vocabularies. You can also pick a password to protect
+   your configuration.
+5. Save, and you'll be directed to `/` where you can now search and browse
+   your data as Linked Data.
+
+##Customisations
+
+If you need Trilby to do something different, and would like to hire me
+to develop it for you, please get in touch.

@@ -1,0 +1,129 @@
+
+<section id="nav">
+<section id="facets">
+  <?php if(isset($facets)):
+    foreach($facets as $p => $objs):?>
+  <section class="facet">
+    <h4><?php echo local($p)?></h4>
+      <ol>
+      <?php foreach($objs as $val => $count):?>
+      <li><a href="?<?php echo curie($p).'='.urlencode(curie($val)).'&amp;'.getQuery()?>"><?php echo empty($val)? 'none' : local($val)?></a><span class="count"><?php echo $count ?></span></li> 
+      <?php endforeach ?>
+    </ol>
+  </section>
+
+  <?php endforeach ?>
+  <?php endif ?>
+  </section>
+
+
+    <form action="" method="get" accept-charset="utf-8" class="search">    
+      <input type="search" name="_search" value="">
+      <p><input type="submit" value="Search"></p>
+    </form>
+
+
+    <?php if(isset($types)):?>
+  <ul id="types">
+    <?php foreach($types as $type => $count):?>
+    <li>
+      <a href="?rdf:type=<?php echo urlencode(curie($type))?>"><?php echo local($type) ?></a>
+      <span class="count"><?php echo $count?></span>
+     </li>
+    <?php endforeach ?>
+  </ul>
+  <?php endif?>
+
+</section>
+
+
+
+
+
+  <?php if(isset($data)):
+    $itemCount=0;
+  ?>
+  <section id="data-list">
+  <?php if($showMap && isset($_GET['_near'])):?>
+
+  <div id="map" style="height:500px"></div>
+
+  <script type="text/javascript" charset="utf-8">
+    var map = L.map('map');
+    L.tileLayer('http://{s}.tile.cloudmade.com/5e0323d36c244749902bb1520170dd58/997/256/{z}/{x}/{y}.png', {
+      attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://cloudmade.com">CloudMade</a>',
+      maxZoom: 18
+    }).addTo(map);
+    var mapCentered = false;
+    var latlongs=[];
+    <?php
+      list($lat, $long) = explode(',',$Store->Index->getUriLatLong($_GET['_near']));
+      ?>
+      var lat = <?php echo $lat ?>;
+      var long = <?php echo $long ?>;
+      map.setView([lat,long], 10);
+
+
+  </script>
+
+  <?php endif ?>
+  <?php
+  if(empty($data) AND isset($requestUri)){
+  ?>
+  <a href="<?php echo $requestUri?>"><?php echo $requestUri?></a> not described in this dataset.
+  <?php }
+  ?>
+  <ol>
+    <?php foreach($data as $uri => $props):
+      $itemCount++;
+    ?>
+    <li>
+      <div class="result" id="<?php echo urlencode($uri)?>">
+        <h4><a href="<?php echo $uri?>"><?php echo label($props, $uri)?></a></h4>
+        <?php if(isset($props[Geo_NS.'lat'])):?>
+        <?php if(!$showMap):?>
+        (<a class="nearby" href="?_near=<?php echo urlencode($uri)?>">Near By</a>)
+        <?php else:?>
+        <a href="#map">Map</a>
+        <?php endif ?>
+
+        <script type="text/javascript" charset="utf-8">
+          var lat = <?php echo $props[Geo_NS.'lat'][0]['value']?>;
+          var long = <?php echo $props[Geo_NS.'long'][0]['value']?>;
+var marker = L.marker([lat,long], {title: "<?php echo addslashes(label($props, $uri))?>" })
+          .bindPopup('<a href="#<?php echo urlencode($uri)?>"><?php echo addslashes(label($props, $uri))?></a>')
+          .addTo(map);
+
+          latlongs.push([lat,long]);
+
+        </script>
+
+        <?php endif ?>
+        <dl>
+          <?php foreach($props as $p => $os):?>
+            <dt> <?php echo local($p)?></dt>
+              <?php foreach($os as $o):?>
+              <dd>
+              <?php echo ($o['type']=='literal')? ($o['value']) : '<a href="?_uri='.urlencode($o['value']).'">'.local($o['value']).'</a>'?>
+              <?php if(!is_array($Store->indexPredicates) OR in_array($p, $Store->indexPredicates)):?> <a href="?<?php echo curie($p).'='.pathescape($o)?>">(similar)</a> <?php endif?>
+              </dd>
+              <?php endforeach ?>
+            <?php endforeach ?>
+        </dl>
+        <a href="?_related=<?php echo urlencode($uri)?>">Related</a>
+      </div>
+    </li>  
+  <?php endforeach ?>
+  </ol>
+  <?php if($showMap):?>
+  <script type="text/javascript" charset="utf-8">
+    map.fitBounds(latlongs);
+  </script>
+    <?php endif?>
+  <div id="pager">
+    <?php if($page > 1):?> <a href="?<?php echo $query . '&amp;_page=' .($page-1) ?>">Previous</a> <?php endif?>
+    &nbsp;
+    <?php if($itemCount == 10):?> <a href="?<?php echo $query . '&amp;_page=' .($page+1)?>">Next</a> <?php endif ?>
+  </div>
+  </section>
+  <?php endif?>

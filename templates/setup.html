@@ -1,0 +1,76 @@
+<form action="" method="post" accept-charset="utf-8" enctype="multipart/form-data">
+  
+  
+  <fieldset>
+    <legend>Upload your Data</legend>
+    <label for="data-file">Turtle or RDF/XML File:</label> <input id="data-file" name="data-file" type="file"><br>
+    <input type="submit" name="upload" value="Upload">
+  </fieldset>
+
+  <fieldset>
+    <legend>Describe your data</legend>
+  <input type="hidden" name="MAX_FILE_SIZE" value="<?php echo $maxfileSize ?>">
+  <label for="name">Name:</label> <input id="name" name="name"
+  value="<?php echo $Config->name?>" placeholder="Your dataset's name"><br>
+  <label for="license">Data License URL:</label> 
+  <input id="license" name="license" value="<?php echo $Config->license
+  ?>" list="licenses" type="url">
+  <datalist id="licenses">
+  <option value="http://opendatacommons.org/licenses/pddl/">Public Domain Dedication and License</option>
+  <option value="http://opendatacommons.org/licenses/by/">Attribution License (ODC-By)</option>
+  <option value="http://opendatacommons.org/licenses/odbl/">Open Database License (ODC-ODbL) — “Attribution Share-Alike for data/databases”</option>
+  </datalist>
+  <br>
+</fieldset>
+
+  <fieldset id="vocabs">
+    <legend>Vocabularies</legend>
+    <p class="help">
+    Enter the prefixes you want to be able to use in Path queries 
+    - eg: if you want to query <kbd>place:in=dbpedia:Iceland</kbd>, 
+    you should define namespaces for <kbd>place</kbd> and <kbd>dbpedia</kbd>.
+    </p>
+      <div id="prefix-fields">
+        <?php
+        $n=0;
+        foreach($Config->prefixes as $prefix => $ns):?>
+            <div class="prefix-ns">
+
+          <label>Prefix: </label>
+          <input name="prefixes[<?=$n?>][prefix]" value="<?=$prefix?>"
+          class="prefix">
+          <label>Namespace URI: </label>
+          <input type="url" name="prefixes[<?=$n++?>][namespace]"
+          value="<?=$ns?>" class="namespace">
+                </div>
+
+        <?php endforeach ?>
+    </div>
+
+    <button name="add-vocab-field">Add Vocabulary</button>
+  </fieldset>
+  
+
+<p><input type="submit" name="save" value="Save"></p>
+
+</form>
+<script type="text/javascript" charset="utf-8" src="http://code.jquery.com/jquery-1.8.2.min.js"></script>
+<script type="text/javascript" charset="utf-8">
+  $(document).ready(function(){
+
+      $('#prefix-fields div.prefix-ns').each(function(){
+        var el = this;
+        var namespace = $('.namespace', el);
+        $('.prefix',el).blur(function(){
+          var prefix = $(this).val();
+          if(prefix.length && namespace.val().length===0){
+            $.getJSON('http://prefix.cc/'+prefix+'.file.json',
+              function(data){
+                namespace.val(data[prefix]);
+              });
+          }
+          });  
+      });  
+
+  });
+</script>

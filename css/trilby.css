@@ -1,0 +1,260 @@
+
+h1 {
+font-size: 300%;
+}
+h2 {
+font-size: 250%
+}
+h3 {
+font-size: 200%;
+}
+h4 {
+font-size: 120%;  
+}
+h5 {
+font-size: 110%
+}
+h6 {
+font-size: 105%;
+}
+
+form * {
+margin: 0.5em;
+}
+label, legend {
+  font-weight: bold;
+}
+
+fieldset {
+margin: 1em;
+}
+
+body {
+        font-family: 'Josefin Sans', sans-serif;
+        font-size: 12pt;
+  }
+
+  a {
+      text-decoration: none; 
+      color: #4567dd 
+    }
+  
+  #data-list {
+    width: 55%;
+  }
+
+#data-list  dt , #data-list  dd {
+  font-size: 90%;
+}
+a.current {
+  font-size: larger;
+  font-weight:bold;
+  text-decoration: underline;
+}
+#nav {
+  width: 25%;
+  float: right;
+}
+#types {
+  display: block;
+  list-style-type: none;
+}
+#types a {
+  font-size: large;
+}
+
+#nav form input {
+  font-size: large;
+}
+
+header, footer {
+  color: #000;
+  clear:both;
+  padding: 1em;
+  background-color: #D9EDF7;
+ }
+
+footer
+{
+  border-top: solid 1px #3A87AD;
+}
+
+div.brand {
+padding: 0.5em;
+text-align: right;
+
+}
+
+footer {
+ text-align: right;
+}
+.brand>* {
+  display: block;
+ font-weight: bold;
+
+}
+.brand a.logo {
+  font-size: 500%;
+  font-family: 'Reenie Beanie', cursive;  
+  color: #000;
+  font-weight: bold;
+  padding: 0.25em;
+  text-shadow: 2px 2px #999
+}
+
+.brand .strapline {
+  font-family: 'Reenie Beanie', cursive;  
+  font-size: 150%
+}
+
+h1 {
+  font-family: 'Reenie Beanie', cursive;  
+  margin-bottom: 0.5em;
+  font-size: 400%;
+}
+#pager {
+  border-top: 1px solid #819B8B;;
+  font-size: larger;
+  text-align: center;
+  padding: 1em;
+}
+
+#nav {
+border-left: 1px solid #819B8B;;
+padding-left: 2em;
+margin-left: 1em;
+}
+
+#facets {
+
+}
+
+#nav li span.count {
+  text-align: right;
+  display: table-cell;
+  padding-left: 2em;
+}
+
+#nav ol, #facets ol li {
+  margin-left: 0;
+  padding-left: 0;
+}
+
+#nav li {
+  display: table-row;
+  margin-bottom: 1em;
+}
+
+#nav li a {
+  display: table-cell;
+  padding: 0.2em;
+}
+
+#nav ol li {
+  border-bottom: solid 1px #898;
+  color: green;
+}
+
+
+/* forms */
+
+/* 
+	Structural
+*/
+
+
+fieldset
+	{ margin: 0 0 1.5em 0; padding: 1.4em;  }
+
+legend
+	{ padding: 0 .4em; font-size:1.2em;  }
+
+
+label	 
+	{ float:left; width:9em; display:block; clear:left; margin-right:1em; text-align:left;  cursor:hand; }
+
+#vocabs label	, #vocabs input
+	{ 
+    display:inline; 
+    float: none;
+    clear: none;
+  }
+
+
+textarea, input, select, label, button, optgroup
+	{ margin-top:5px; }
+
+
+input[type="checkbox"] ,input[type="radio"]
+	{ margin-bottom:7px; }	
+
+input[type="url"]
+{
+  width: 25em;
+}
+
+fieldset {
+  border: 1px solid #999;
+  border-radius: 5px;
+}
+
+fieldset#vocabs {
+  margin-top: 2em;
+}
+
+fieldset p {
+  margin: 0.5em;
+  color: #666;
+}
+
+p.help {
+  font-family: "Baskerville", "Times New Roman", serif;
+}
+
+p.help kbd {
+  font-family: Courier, fixed-width;
+}
+
+form.search input
+{
+  display: inline ;
+  margin: 2px;
+}
+form.search label {
+  display: none;
+}
+
+form.search {
+  padding-bottom: 1.5em;
+}
+
+
+//definition lists
+
+  dt {
+    float: left;
+    clear: left;
+    width: 10em;
+    text-align: right;
+    font-weight: bold;
+    color: green;
+  }
+  dt:after {
+    content: ":";
+  }
+  dd {
+    margin: 0 0 0 110px;
+    padding: 0 0 0.5em 0;
+  }
+
+ section#data-list ol {
+    margin: 0.25em;
+    margin-left: 2em;
+    list-style-type: decimal
+  }
+
+ section#data-list ol li {
+  margin: 2em;
+ }
+
+
