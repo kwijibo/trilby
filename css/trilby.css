@@ -58,6 +58,7 @@ a.current {
 #types {
   display: block;
   list-style-type: none;
+  margin: 0.5em;
 }
 #types a {
   font-size: large;
@@ -74,11 +75,6 @@ header, footer {
   background-color: #D9EDF7;
  }
 
-footer
-{
-  border-top: solid 1px #3A87AD;
-}
-
 div.brand {
 padding: 0.5em;
 text-align: right;
@@ -87,6 +83,8 @@ text-align: right;
 
 footer {
  text-align: right;
+ border-top: solid 1px #3A87AD;
+ margin-top: 1em;
 }
 .brand>* {
   display: block;
@@ -109,8 +107,8 @@ footer {
 
 h1 {
   font-family: 'Reenie Beanie', cursive;  
-  margin-bottom: 0.5em;
-  font-size: 400%;
+  margin-bottom: 0.25em;
+  font-size: 200%;
 }
 #pager {
   border-top: 1px solid #819B8B;;
@@ -121,8 +119,9 @@ h1 {
 
 #nav {
 border-left: 1px solid #819B8B;;
-padding-left: 2em;
+padding-left: 10px;
 margin-left: 1em;
+margin-bottom: 1em;
 }
 
 #facets {
@@ -133,6 +132,7 @@ margin-left: 1em;
   text-align: right;
   display: table-cell;
   padding-left: 2em;
+  font-size: 12pt;
 }
 
 #nav ol, #facets ol li {
@@ -222,10 +222,6 @@ form.search input
 }
 form.search label {
   display: none;
-}
-
-form.search {
-  padding-bottom: 1.5em;
 }
 
 

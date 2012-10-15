@@ -12,8 +12,13 @@ function savePostToConfig(){
     'name' => $_POST['name'],
     'license' => $_POST['license'],
     'prefixes' => array(),
+    'username' => $_POST['Username'],
   );
-  if(isset($_POST['prefixes'])){
+  if(!empty($_POST['Password'])){
+    $config['password'] = md5($_POST['Password']);
+  }
+
+   if(isset($_POST['prefixes'])){
     foreach($_POST['prefixes'] as $vocab){
       $config['prefixes'][$vocab['prefix']] = $vocab['namespace'];
     }
@@ -66,6 +71,25 @@ function uploadData(){
     }
   }
 }
+
+$Config = getConfig(0);
+/* authenticate*/
+if(
+  !empty($Config->password) && !empty($Config->username)
+  && (
+  (!isset($_SERVER['PHP_AUTH_USER']) || !isset($_SERVER['PHP_AUTH_PW']))
+  ||
+  (
+    $Config->username !=$_SERVER['PHP_AUTH_USER'] ||
+    $Config->password !=md5($_SERVER['PHP_AUTH_PW'])
+  )
+  )
+){
+      header('WWW-Authenticate: Basic realm="My Realm"');
+      header('HTTP/1.0 401 Unauthorized');
+      echo 'You need to log in to access the setup page. If you have forgotton your password, delete "config.json" from your Trilby installation folder.';
+      exit;
+}
 if($_SERVER['REQUEST_METHOD']=='POST'){
   savePostToConfig();
   uploadData();
@@ -76,6 +100,7 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
    $innerTemplate='setup.html';
    $showMap = false;
    $title = 'Setup';
+   $site_name = 'Trilby';
    require 'templates/outer.html';
 }
 

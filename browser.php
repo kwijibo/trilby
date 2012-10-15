@@ -7,7 +7,8 @@ require 'helpers.php';
 $Config = getConfig();
 $Store = new \Raffles\RafflesStore(RAFFLES_DATA_DIR);
 
-$title = $Config->name;
+$site_name = $Config->name;
+$title='';
 $showMap=false;
 $types = $Store->getTypes();
 $prefixes = getPrefixes($Config,$Store);

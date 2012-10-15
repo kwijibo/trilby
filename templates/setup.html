@@ -1,5 +1,10 @@
 <form action="" method="post" accept-charset="utf-8" enctype="multipart/form-data">
-  
+
+  <fieldset id=Set a password to protect the configuration"name">
+    <legend>Set a password to protect the configuration</legend>
+    <label for="Username">Username</label><input type="text" name="Username" value="<?php if(isset($Config->username)) echo $Config->username?>" id="Username"><br>
+    <label for="Password">Password</label><input type="password" name="Password" value="" id="Password">
+  </fieldset>
   
   <fieldset>
     <legend>Upload your Data</legend>
