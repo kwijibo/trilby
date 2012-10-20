@@ -12,7 +12,7 @@ naming your dataset and uploading your RDF file, and it's done!
 * Geo-search (find things near other things)
 * Linked Data - URIs that start with where you installed Trilby
   content-negotiate to HTML, RDF/JSON, and Turtle
-* VoID Metadata.
+* VoID Metadata.i(Todo)
 
 ##Small
 
@@ -42,10 +42,6 @@ several minutes to upload the file to Trilby.
 5. Save, and you'll be directed to `/` where you can now search and browse
    your data as Linked Data.
 
-##Customisations
-
-If you need Trilby to do something different, and would like to hire me
-to develop it for you, please get in touch.
 
 
 
