@@ -9,4 +9,5 @@
   intelligently ?
 * _dataset to conneg to void for rdf, and html to be clickable bar charts
   of facets
+* caching clientside and server side
 
