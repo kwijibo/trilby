@@ -1,43 +1,5 @@
-
-<section id="nav">
-<section id="facets">
-  <?php if(isset($facets)):
-    foreach($facets as $p => $objs):?>
-  <section class="facet">
-    <h4><?php echo local($p)?></h4>
-      <ol>
-      <?php foreach($objs as $val => $count):?>
-      <li><a href="?<?php echo curie($p).'='.urlencode(curie($val)).'&amp;'.getQuery()?>"><?php echo empty($val)? 'none' : local($val)?></a><span class="count"><?php echo $count ?></span></li> 
-      <?php endforeach ?>
-    </ol>
-  </section>
-
-  <?php endforeach ?>
-  <?php endif ?>
-  </section>
-
-
-    <form action="" method="get" accept-charset="utf-8" class="search">    
-      <input type="search" name="_search" value="">
-      <input type="submit" value="Search">
-    </form>
-
-
-    <?php if(isset($types)):?>
-  <ul id="types">
-    <?php foreach($types as $type => $count):?>
-    <li>
-      <a href="?rdf:type=<?php echo urlencode(curie($type))?>"><?php echo local($type) ?></a>
-      <span class="count"><?php echo $count?></span>
-     </li>
-    <?php endforeach ?>
-  </ul>
-  <?php endif?>
-
-</section>
-
-
-
+<div id="contents">
+    <h2><?=$title?></h2>
 
 
   <?php if(isset($data)):
@@ -67,6 +29,7 @@
   </script>
 
   <?php endif ?>
+  <div class="result-count"><?=$resultCount?> results</div>
   <?php
   if(empty($data) AND isset($requestUri)){
   ?>
@@ -104,8 +67,9 @@ var marker = L.marker([lat,long], {title: "<?php echo addslashes(label($props, $
             <dt> <?php echo local($p)?></dt>
               <?php foreach($os as $o):?>
               <dd>
-              <?php echo ($o['type']=='literal')? ($o['value']) : '<a href="?_uri='.urlencode($o['value']).'">'.local($o['value']).'</a>'?>
-              <?php if(!is_array($Store->indexPredicates) OR in_array($p, $Store->indexPredicates)):?> <a href="?<?php echo curie($p).'='.pathescape($o)?>">(similar)</a> <?php endif?>
+              <?php echo ($o['type']=='literal')? ($o['value']) : '<a href="?_uri='.urlencode($o['value']).'">'.htmlentities(local($o['value'])).'</a>'?>
+                <a title="more like this" class="similar" href="?<?php echo
+                  curie($p).'='.pathescape($o)?>">&rarr;</a> 
               </dd>
               <?php endforeach ?>
             <?php endforeach ?>
@@ -127,3 +91,47 @@ var marker = L.marker([lat,long], {title: "<?php echo addslashes(label($props, $
   </div>
   </section>
   <?php endif?>
+</div>
+
+
+<section id="nav">
+<section id="facets">
+  <?php if(isset($facets)):
+    foreach($facets as $p => $objs):?>
+  <section class="facet">
+    <h4><?php echo local($p)?></h4>
+      <ol>
+      <?php foreach($objs as $val => $count):?>
+      <li><a href="?<?php echo curie($p).'='.urlencode(curie($val)).'&amp;'.getQuery(array('_search'))?>"><?php echo empty($val)? 'none' : local($val)?></a><span class="count"><?php echo $count ?></span></li> 
+      <?php endforeach ?>
+    </ol>
+  </section>
+
+  <?php endforeach ?>
+  <?php endif ?>
+  </section>
+
+
+    <form action="" method="get" accept-charset="utf-8" class="search">    
+      <input type="search" name="_search" value="">
+      <input type="submit" value="Search">
+    </form>
+
+
+    <?php if(isset($types)):?>
+  <ul id="types">
+    <?php foreach($types as $type => $count):?>
+    <li>
+      <a href="?rdf:type=<?php echo urlencode(curie($type))?>"><?php echo local($type) ?></a>
+      <span class="count"><?php echo $count?></span>
+     </li>
+    <?php endforeach ?>
+  </ul>
+  <?php endif?>
+
+</section>
+
+
+
+
+

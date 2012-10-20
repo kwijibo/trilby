@@ -9,6 +9,14 @@ class Config {
   var $prefixes = array();
 }
 
+function getLicenses(){
+  return array(
+  "http://opendatacommons.org/licenses/pddl/" => "Public Domain Dedication and License",
+  "http://opendatacommons.org/licenses/by/" => "Attribution License (ODC-By)",
+  "http://opendatacommons.org/licenses/odbl/" => "Open Database License (ODC-ODbL) — “Attribution Share-Alike for data/databases”",
+  );
+}
+
 function getConfig($redirectIfNotExists=true){
   if(is_readable(CONFIG_JSON_FILE)){
     return json_decode(file_get_contents(CONFIG_JSON_FILE));
@@ -91,12 +99,16 @@ function getPrefixes(&$Config,&$Store){
   }
 
 
-function label($props, $uri='Something'){
+function label(&$props, $uri='Something'){
   global $prefixes;
   extract($prefixes);
-  $labelPs = array($dct.'title', $foaf.'name', $rdfs.'label');
+  $labelPs = array($skos.'prefLabel', $dct.'title', $foaf.'name', $rdfs.'label', $foaf.'surname', $skos.'altLabel');
   foreach($labelPs as $p){
-    if(isset($props[$p])) return $props[$p][0]['value'];
+    if(isset($props[$p])){
+      $label = $props[$p][0]['value'];
+      unset($props[$p]);
+      return $label;
+    }
   } 
   $type = 'Thing';
   if(isset($props[$rdf.'type'])){
@@ -105,17 +117,16 @@ function label($props, $uri='Something'){
   return "A ".curie($type);
 }
 
-function getQuery(){
+function getQuery($allowed=array()){
+  $reserved = array('_page','_related','_uri','_pageSize');
+  $diff = array_diff($reserved, $allowed);
   $get = $_GET;
-  unset($get['_page']);
-  unset($get['_related']);
-  unset($get['_uri']);
-  unset($get['_dataset']);
-  unset($get['_near']);
-  unset($get['_reload']);
-  unset($get['_search']);
-  $q=array();
-  foreach($get as $k => $v) $q[]="{$k}=".($v);
+ $q=array();
+  foreach($get as $k => $v){
+    if(!in_array($k,$diff)){
+      $q[]="{$k}=".urlencode($v);
+    }
+  }
   return implode('&',$q);
 }
 

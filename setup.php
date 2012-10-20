@@ -14,8 +14,13 @@ function savePostToConfig(){
     'prefixes' => array(),
     'username' => $_POST['Username'],
   );
-  if(!empty($_POST['Password'])){
+  $Password = trim($_POST['Password']);
+  if(!empty($Password)){
     $config['password'] = md5($_POST['Password']);
+  } else {
+    $existingConfig = getConfig(0);
+    $config['password'] = $existingConfig->password;
+    
   }
 
    if(isset($_POST['prefixes'])){
@@ -101,6 +106,7 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
    $showMap = false;
    $title = 'Setup';
    $site_name = 'Trilby';
+   $licenses = getLicenses();
    require 'templates/outer.html';
 }
 

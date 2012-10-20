@@ -23,18 +23,22 @@
   <header id="top">
     <h1><?=$site_name ?></h1>       
   </header>
-  <div id="contents">
-    <h2><?=$title?></h2>
     <?php include $innerTemplate?>
-  </div>
-  <section id="sidebar">
-  </section>
-
   <footer>
     <div class="brand">
       <a class="logo" href="https://github.com/kwijibo/Trilby">Trilby</a>
       <span class="strapline">Dynamic Linked Data for Small Datasets</span>
     </div>
+
+  <?php if(!empty($Config->license)):?>
+  <span class="license-statement">
+    This data is made available under <a href="<?=$Config->license?>"><?php
+    if(isset($licenses[$Config->license])) echo
+    $licenses[$Config->license]; else echo $Config->license ;?></a>
+  .
+  </span>
+  <?php endif?>
+
   </footer>
 </body>
 </html>

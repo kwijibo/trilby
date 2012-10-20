@@ -27,6 +27,7 @@ header#top {
   float: left;
   width: 22.916666666666664%;
   margin: 0 1.0416666666666665%;
+  min-height: 22em;
 }
 @media screen and (max-width: 720px) {
   #contents,
