@@ -1,5 +1,5 @@
 {
-    "name": "kwijibo/Trilby",
+    "name": "kwijibo/trilby",
     "description": "Feature Rich Dynamic Linked Data publishing for small datasets",
     "minimum-stability" : "dev",
     "require": {
