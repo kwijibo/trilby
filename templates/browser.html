@@ -68,8 +68,22 @@ var marker = L.marker([lat,long], {title: "<?php echo addslashes(label($props, $
               <?php foreach($os as $o):?>
               <dd>
               <?php echo ($o['type']=='literal')? ($o['value']) : '<a href="?_uri='.urlencode($o['value']).'">'.htmlentities(local($o['value'])).'</a>'?>
-                <a title="more like this" class="similar" href="?<?php echo
+
+              <span class="facet-navigation">
+              <?php if(is_numeric($o['value'])):?>
+              <a title="less than" href="?<?php echo getQuery().'&amp;'.
+                curie($p).';_max='.pathescape($o)?>">&lt;</a>
+              <?php endif?>
+            
+              <a title="more like this" class="similar" href="?<?php echo
                   curie($p).'='.pathescape($o)?>">&rarr;</a> 
+   
+                <?php if(is_numeric($o['value'])):?>
+              <a title="more than" href="?<?php echo getQuery().'&amp;'.
+                curie($p).';_min='.pathescape($o)?>">&gt;</a>
+              <?php endif?>
+              </span>
+
               </dd>
               <?php endforeach ?>
             <?php endforeach ?>

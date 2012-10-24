@@ -1,0 +1,14 @@
+{
+    "name": "kwijibo/Trilby",
+    "description": "Feature Rich Dynamic Linked Data publishing for small datasets",
+    "minimum-stability" : "dev",
+    "require": {
+        "kwijibo/raffles": "dev-master"
+    },
+    "authors": [
+        {
+            "name": "Keith Alexander",
+            "email": "keithalexander@keithalexander.co.uk"
+        }
+    ]
+}

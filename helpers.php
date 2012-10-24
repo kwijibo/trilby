@@ -37,15 +37,13 @@ function redirect($page){
 function getPrefixes(&$Config,&$Store){
     if($prefixes = $Config->prefixes){
       foreach($prefixes as $prefix => $ns){
-        $Store->addPrefix($prefix, $ns);
+        if(!empty($ns)){
+          $Store->addPrefix($prefix, $ns);
+        }
       }
     }
     return $Store->prefixes;
 }
-
-  function get_etag(){
-    return time();
-  }
 
   function get_if_none_match(){
     $headers = apache_request_headers();
@@ -118,7 +116,7 @@ function label(&$props, $uri='Something'){
 }
 
 function getQuery($allowed=array()){
-  $reserved = array('_page','_related','_uri','_pageSize');
+  $reserved = array('_page','_related','_uri','_pageSize', '_output');
   $diff = array_diff($reserved, $allowed);
   $get = $_GET;
  $q=array();
@@ -176,4 +174,28 @@ class AcceptHeader {
         }
     }
 
+}
+
+function getOutputType(){
+  $acceptTypes = AcceptHeader::getAcceptTypes();
+  $outputTypes = array('turtle','html','json');
+  if(!empty($_GET['_output']) AND in_array($_GET['_output'], $outputTypes)){
+    return $_GET['_output'];
+  }
+  $acceptTypes = AcceptHeader::getAcceptTypes();
+  foreach($acceptTypes as $mimetype){
+    switch($mimetype){
+      case 'text/html':
+      case 'application/xhtml+xml':
+      case '*/*':
+      case '':
+        return 'html';
+      case 'application/json':
+      case 'application/x-rdf+json':
+        return 'json';
+      case 'text/turtle':
+      case 'text/plain':
+        return 'turtle';
+    }
+  }
 }

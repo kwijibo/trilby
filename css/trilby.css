@@ -150,6 +150,11 @@ h1 {
   color: green;
 }
 
+#facets h4 {
+  border-bottom: solid 1px #999;
+  margin-bottom: 0.5em;
+  margin-top: 1em;
+}
 
 /* forms */
 
@@ -261,4 +266,6 @@ padding-bottom: 0.5em;
     text-align: right;
   }
 
-
+span.facet-navigation a {
+  font-family: "Reenie Beanie", serif ;
+}
