@@ -1,6 +1,6 @@
 <?php
-require '../Raffles/lib/rafflesstore.php';
 include 'vendor/autoload.php';
+require 'vendor/kwijibo/raffles/lib/rafflesstore.php';
 require 'helpers.php';
 
 $Config = getConfig();
@@ -26,6 +26,10 @@ if($query = getQuery()){
   $data = $Store->get(null,null,$_GET['_related'], $pageSize, $offset);
 } else if(!empty($_GET['_search'])){
   $data = $Store->search($_GET['_search'], false, $pageSize, $offset);
+} else {
+  $documentUri = 'http://' .$_SERVER['HTTP_HOST']. $_SERVER['REQUEST_URI'];
+  $documentUri = array_shift(explode('?', $documentUri));
+  $data = $Store->get($documentUri);
 }
 
 $facets = $Store->getFacetsForLastQuery();

@@ -1,8 +1,8 @@
 <?php
 ini_set('upload_max_filesize', '30M');
 set_time_limit(0);
-define('RAFFLES_ROOT', __DIR__.'/../Raffles/');
-require '../Raffles/lib/rafflesstore.php';
+define('RAFFLES_ROOT', __DIR__.'/vendor/kwijibo/raffles/');
+require 'vendor/kwijibo/raffles/lib/rafflesstore.php';
 include 'vendor/autoload.php';
 
 require 'helpers.php';
