@@ -3,6 +3,8 @@ namespace Trilby;
 
 define('void_ns', 'http://rdfs.org/ns/void#');
 define('rdf_ns', 'http://www.w3.org/1999/02/22-rdf-syntax-ns#');
+define('dcterms_ns', 'http://purl.org/dc/terms/');
+
 class Graph {
 
   var $_index = array();
@@ -67,6 +69,13 @@ function addMetadata($data, &$Config, $types, $facets){
       $classPartition->setLiteral(void_ns.'entities', $entities);
     }
   }
+  if(!empty($Config->license)){
+    $DocumentGraph->setResource(dcterms_ns.'license', $Config->license);
+  }
+  if(!empty($Config->name)){
+    $DocumentGraph->setLiteral(dcterms_ns.'title', $Config->name);
+  }
+
   return $DocumentGraph->getIndex();
 }
 
