@@ -32,7 +32,11 @@ function savePostToConfig(){
     $config['prefixes']['prefix']='';
   }
 
-  return file_put_contents(CONFIG_JSON_FILE, json_encode($config));
+  try {
+    file_put_contents(CONFIG_JSON_FILE, json_encode($config));
+  } catch(Exception $e){
+    echo "The webserver does not have permission to write your config file in this directory. ";
+  }
 }
 
 function uploadData(){
@@ -90,7 +94,7 @@ if(
   )
   )
 ){
-      header('WWW-Authenticate: Basic realm="My Realm"');
+      header('WWW-Authenticate: Basic realm="Trilby Setup"');
       header('HTTP/1.0 401 Unauthorized');
       echo 'You need to log in to access the setup page. If you have forgotton your password, delete "config.json" from your Trilby installation folder.';
       exit;
@@ -101,7 +105,18 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
   redirect('_setup');
 } else {
    $maxfileSize = ini_get('upload_max_filesize');
+   $Store = new \Raffles\RafflesStore(RAFFLES_DATA_DIR);
+   $ns = $Store->getNamespaces();
+
    $Config = getConfig(false);
+   if(empty($Config->prefixes)){
+    $Config->prefixes = new StdClass();
+   }
+   foreach($ns as $nsUri => $prefix){
+    if(empty($Config->prefixes->$prefix)){
+      $Config->prefixes->$prefix =$nsUri;
+    }
+   }
    $innerTemplate='setup.html';
    $showMap = false;
    $title = 'Setup';
