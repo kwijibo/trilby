@@ -7,10 +7,12 @@
    if(!is_readable($argv[1])){
       echo "\nYou need to change the permissions on {$argv[1]} to make it readable\n";
    }
+   include 'vendor/autoload.php';
    require 'helpers.php'; 
    set_time_limit(0);
-   define('RAFFLES_ROOT', __DIR__.'/vendor/kwijibo/raffles/');
+   define('RAFFLES_ROOT', __DIR__.'/../vendor/kwijibo/raffles/');
    require RAFFLES_ROOT . '/lib/rafflesstore.php';
    $Store = new \Raffles\RafflesStore(RAFFLES_DATA_DIR);
    $Store->loadDataFile($argv[1]);
+   chmod(RAFFLES_DATA_DIR, 0777);
 ?>
