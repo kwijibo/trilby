@@ -122,13 +122,12 @@ if(
 
 if($_SERVER['REQUEST_METHOD']=='POST'){
   if(empty($_POST)){
-    serveErrorPage('File too big');
+    serveErrorPage('The file is too big for this server; try increasing the maximum post size and file upload settigns in php.ini, or at the command line, in your trilby directory, run: php bin/add-data.php {filename}');
   }
   try {
     savePostToConfig();
     uploadData();
   } catch(SetupException $e){
-    var_dump($e);
     serveErrorPage($e->getMessage());
   }
   redirect('_setup');
@@ -136,7 +135,6 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
    $maxfileSize = return_bytes(ini_get('upload_max_filesize'));
    $Store = new \Raffles\RafflesStore(RAFFLES_DATA_DIR);
    $ns = $Store->getNamespaces();
-   var_dump($ns);
 
    $Config = getConfig(false);
    if(empty($Config->prefixes)){
