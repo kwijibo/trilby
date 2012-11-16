@@ -17,6 +17,11 @@
     <!-- <input type="hidden" name="MAX_FILE_SIZE" value="<?php echo $maxfileSize ?>">-->
     <label for="data-file">Turtle or RDF/XML File:</label> <input id="data-file" name="data-file" type="file"><br>
     <input type="submit" name="upload" value="Upload" id="upload-button">
+    <?php
+    if(file_exists(RAFFLES_DATA_DIR . DIRECTORY_SEPARATOR . 'descriptions')):
+    ?>
+    <a id="browse-your-data" href="<?php echo TRILBY_WEB_BASE_DIR ?>">Browse your data</a>
+    <?php endif ?>
   </fieldset>
 
   <fieldset>

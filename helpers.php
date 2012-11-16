@@ -2,7 +2,7 @@
 
 define('CONFIG_JSON_FILE', 'config.json');
 define('RAFFLES_DATA_DIR', 'raffles-data');
-
+define('TRILBY_WEB_BASE_DIR', dirname($_SERVER['SCRIPT_NAME']).'/');
 class Config {
   var $name='';
   var $license = '';

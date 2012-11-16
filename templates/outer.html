@@ -4,8 +4,8 @@
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
 
     <title><?php echo $title?> <?php echo $site_name ?></title>
-    <?php if(isset($base)):?>
-    <base href="<?php echo $base ?>">
+    <?php if(defined(TRILBY_WEB_BASE_DIR)):?>
+    <base href="<?php echo TRILBY_WEB_BASE_DIR ?>">
     <?php endif ?>
     <link rel="shortcut icon" href="images/connection.png" type="image/png">
     <link href='http://fonts.googleapis.com/css?family=Reenie+Beanie' rel='stylesheet' type='text/css'>

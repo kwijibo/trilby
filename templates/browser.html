@@ -40,6 +40,7 @@
     <?php foreach($data as $uri => $props):
     $itemCount++;
     $label = label($props, $uri);
+    $depiction = depiction($props,$uri);
     ?>
     <li>
       <div class="result" id="<?php echo urlencode($uri)?>">
@@ -55,7 +56,7 @@
           var lat = <?php echo $props[Geo_NS.'lat'][0]['value']?>;
           var long = <?php echo $props[Geo_NS.'long'][0]['value']?>;
 var marker = L.marker([lat,long], {title: "<?php echo addslashes($label)?>" })
-          .bindPopup('<a href="#<?php echo urlencode($uri)?>"><?php echo addslashes($label)?></a>')
+.bindPopup('<h6><a href="#<?php echo urlencode($uri)?>"><?php echo addslashes($label)?></a></h6><?php if($depiction):?><div><img width="100" src="<?php echo $depiction?>"></div><?php endif?>')
           .addTo(map);
 
           latlongs.push([lat,long]);
@@ -64,7 +65,7 @@ var marker = L.marker([lat,long], {title: "<?php echo addslashes($label)?>" })
 
         <?php endif ?>
 
-        <?php if($depiction = depiction($props,$uri)):?>
+        <?php if($depiction):?>
           <div class="pic">
             <a href="<?php echo $depiction?>"><img src="<?php echo $depiction?>" width="300"></a>
           </div>

@@ -285,3 +285,13 @@ header div.format-links a {
   font-size: smaller;
   margin: 0.5em;
 }
+
+a#browse-your-data {
+  display: block;
+  width: 15em;
+  margin: 1em;
+  font-weight: bold; 
+  padding: 1em;
+  background: #FCF6CF;
+  border: 2px dotted #7FFF00;
+}
