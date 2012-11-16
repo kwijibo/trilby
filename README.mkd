@@ -40,9 +40,18 @@ to that directory.
    file, give your dataset a name and license, and choose prefixes for
    your data's vocabularies. You can also pick a password to protect
    your configuration.
-5. Save, and you'll be directed to `/` where you can now search and browse
+5. Save, and you'll see a link to `/` where you can now search and browse
    your data as Linked Data.
 
+
+##Examples
+
+* [Eighteenth century Texts](http://keithalexander.co.uk/ecco-tcp/) (texts from ECCO TCP)
+* [Printed Book Auction Catalogues](http://keithalexander.co.uk/pbac/)
+
+Install Trilby and add your own project to this list!
+
+Thanks!
 
 
 
