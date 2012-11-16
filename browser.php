@@ -19,7 +19,6 @@ $page = 1;
 $pageSize = !empty($_GET['_pageSize'])? $_GET['_pageSize'] : 10;
 $offset = (isset($_GET['_page']) && $page = $_GET['_page'])? ($_GET['_page']-1)*$pageSize : 0;
 $data=array();
-$base = dirname($_SERVER['SCRIPT_NAME']).'/';
 if($query = getQuery()){
   $data = $Store->query($query, $pageSize, $offset);
 } else if(!empty($_GET['_uri'])){
@@ -37,7 +36,9 @@ if($query = getQuery()){
 $facets = $Store->getFacetsForLastQuery();
 $resultCount = $Store->getResultsCountForLastQuery();
 $showMap= (strpos($query,'_near')!==false || isset($_GET['_near']))? true : false ;
-  
+
+header("Access-Control-Allow-Origin: *");
+
   $output = getOutputType();
   if($output=='html'){
     $innerTemplate = 'browser.html';
@@ -50,12 +51,14 @@ $showMap= (strpos($query,'_near')!==false || isset($_GET['_near']))? true : fals
   $namespaces = $Store->getNamespaces();
   $data = \Trilby\addMetadata($data, $Config, $types, $facets, $namespaces);
     if($output=='json'){
+      header("Content-type: application/json");
       echo json_encode($data);
       exit;
     } else {
       require_once 'vendor/kwijibo/arc2/ARC2.php';
       $conf=array('ns' => $prefixes );
       $ser = ARC2::getTurtleSerializer($conf);
+      header("Content-type: text/plain");
       echo $ser->getSerializedIndex($data);
       exit;
     }
