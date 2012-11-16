@@ -1,5 +1,5 @@
   <div id="contents">
-    <h2><?=$title?></h2>
+    <h2><?php echo $title?></h2>
 
 <form action="" method="post" accept-charset="utf-8" enctype="multipart/form-data">
 
@@ -28,7 +28,7 @@
   ?>" list="licenses" type="url">
   <datalist id="licenses">
   <?php foreach($licenses as $uri => $label):?>
-    <option value="<?=$uri?>"><?=($label)?></option>
+    <option value="<?php echo $uri?>"><?php echo($label)?></option>
   <?php endforeach?>
   </datalist>
   <br>
@@ -51,11 +51,11 @@
             <div class="prefix-ns">
 
           <label>Prefix: </label>
-          <input name="prefixes[<?=$n?>][prefix]" value="<?=$prefix?>"
+          <input name="prefixes[<?php echo $n?>][prefix]" value="<?php echo $prefix?>"
           class="prefix">
           <label>Namespace URI: </label>
-          <input type="url" name="prefixes[<?=$n++?>][namespace]"
-          value="<?=$ns?>" class="namespace">
+          <input type="url" name="prefixes[<?php echo $n++?>][namespace]"
+          value="<?php echo $ns?>" class="namespace">
                 </div>
 
         <?php endforeach ?>

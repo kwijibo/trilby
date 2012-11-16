@@ -1,5 +1,5 @@
 <div id="contents">
-    <h2><?=$title?></h2>
+    <h2><?php echo $title?></h2>
 
 
   <?php if(isset($data)):
@@ -29,7 +29,7 @@
   </script>
 
   <?php endif ?>
-  <div class="result-count"><?=$resultCount?> results</div>
+  <div class="result-count"><?php echo $resultCount?> results</div>
   <?php
   if(empty($data) AND isset($requestUri)){
   ?>
