@@ -1,5 +1,3 @@
-php_value "short_open_tag" "on"
-php_value "asp_tags" "on"
 RewriteEngine On
 RewriteRule ^$  browser.php [QSA,L]
 
