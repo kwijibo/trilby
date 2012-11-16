@@ -43,7 +43,7 @@ naming your dataset and uploading your RDF file, and it's done!</p>
 <li>Geo-search (find things near other things)</li>
 <li>Linked Data - URIs that start with where you installed Trilby
 content-negotiate to HTML, RDF/JSON, and Turtle</li>
-<li>VoID Metadata.(Todo)</li>
+<li>VoID Metadata. </li>
 </ul><h2>Small</h2>
 
 <p>Trilby aims to make it very easy to dynamically publish smaller
@@ -62,9 +62,11 @@ several minutes to upload the file to Trilby.</p>
 <h2>Installation</h2>
 
 <ol>
-<li>Use <a href="http://getcomposer.org">Composer</a> to download Trilby. </li>
+<li>Use <a href="http://getcomposer.org">Composer</a> to download Trilby. <code>composer create-project kwijibo/trilby your-install-dir</code>
+</li>
 <li>Put it where you want on your webserver. (eg, in the web root folder,
-or a sub directory).</li>
+or a sub directory), and make sure your webserver can read and write
+to that directory.</li>
 <li>Point your browser to it.</li>
 <li>You should be redirected to <code>/_setup</code> where you can upload your RDF data
 file, give your dataset a name and license, and choose prefixes for
