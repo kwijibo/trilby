@@ -25,7 +25,18 @@
 </head>
 <body>
   <header id="top">
+  <?php if(!empty($data)):?>
+      <div class="format-links">
+        <a href="?<?php echo getQuery()?>&amp;_output=turtle">Turtle</a>
+        <a href="?<?php echo getQuery()?>&amp;_output=json">JSON</a>
+      </div>
+    <?php endif?>
+
+
+
   <h1><a href=""><?php echo $site_name ?></a></h1>       
+
+
   </header>
     <?php include $innerTemplate?>
   <footer>

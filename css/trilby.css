@@ -276,3 +276,12 @@ span.facet-navigation a {
   font-family: "Monaco", fixed-width ;
   font-weight: normal;
 }
+
+header div.format-links {
+  float:right;
+}
+header div.format-links a {
+  display: block;
+  font-size: smaller;
+  margin: 0.5em;
+}

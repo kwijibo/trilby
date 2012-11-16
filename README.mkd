@@ -31,7 +31,7 @@ several minutes to upload the file to Trilby.
 
 ##Installation
 
-1. Use [http://getcomposer.org](Composer) to download Trilby. `composer create-project kwijibo/trilby your-install-dir`
+1. Use [Composer](http://getcomposer.org) to download Trilby. `composer create-project kwijibo/trilby your-install-dir`
 2. Put it where you want on your webserver. (eg, in the web root folder,
    or a sub directory), and make sure your webserver can read and write
 to that directory.

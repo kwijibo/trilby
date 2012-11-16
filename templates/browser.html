@@ -93,7 +93,7 @@ var marker = L.marker([lat,long], {title: "<?php echo addslashes($label)?>" })
               <?php endforeach ?>
             <?php endforeach ?>
         </dl>
-        <a href="?_related=<?php echo urlencode($uri)?>">Related</a>
+        <a title="things linking to <?php echo $label?>" href="?_related=<?php echo urlencode($uri)?>"><img alt="Related" src="images/connections.png"></a>
       </div>
     </li>  
   <?php endforeach ?>

@@ -136,6 +136,7 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
    $maxfileSize = return_bytes(ini_get('upload_max_filesize'));
    $Store = new \Raffles\RafflesStore(RAFFLES_DATA_DIR);
    $ns = $Store->getNamespaces();
+   var_dump($ns);
 
    $Config = getConfig(false);
    if(empty($Config->prefixes)){
