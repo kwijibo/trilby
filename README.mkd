@@ -33,7 +33,8 @@ several minutes to upload the file to Trilby.
 
 1. Use (Composer)[http://getcomposer.org] to download Trilby. `composer create-project kwijibo/trilby your-install-dir`
 2. Put it where you want on your webserver. (eg, in the web root folder,
-   or a sub directory).
+   or a sub directory), and make sure your webserver can read and write
+to that directory.
 3. Point your browser to it.
 4. You should be redirected to `/_setup` where you can upload your RDF data
    file, give your dataset a name and license, and choose prefixes for

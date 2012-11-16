@@ -19,7 +19,7 @@ $page = 1;
 $pageSize = !empty($_GET['_pageSize'])? $_GET['_pageSize'] : 10;
 $offset = (isset($_GET['_page']) && $page = $_GET['_page'])? ($_GET['_page']-1)*$pageSize : 0;
 $data=array();
-$base = dirname($_SERVER['REQUEST_URI']).'/';
+$base = dirname($_SERVER['SCRIPT_NAME']).'/';
 if($query = getQuery()){
   $data = $Store->query($query, $pageSize, $offset);
 } else if(!empty($_GET['_uri'])){
@@ -46,8 +46,9 @@ $showMap= (strpos($query,'_near')!==false || isset($_GET['_near']))? true : fals
   } 
   
   if ($output=='json' || $output =='turtle'){
-  require 'metadata.php';
-  $data = \Trilby\addMetadata($data, $Config, $types, $facets);
+    require 'metadata.php';
+  $namespaces = $Store->getNamespaces();
+  $data = \Trilby\addMetadata($data, $Config, $types, $facets, $namespaces);
     if($output=='json'){
       echo json_encode($data);
       exit;

@@ -40,7 +40,7 @@ class Graph {
 
 
 
-function addMetadata($data, &$Config, $types, $facets){
+function addMetadata($data, &$Config, $types, $facets, $namespaces){
   $datasetUri = 'http://' .$_SERVER['HTTP_HOST']. dirname($_SERVER['SCRIPT_NAME']).'/';
   $documentUri = 'http://' .$_SERVER['HTTP_HOST']. $_SERVER['REQUEST_URI'];
   $documentUri = array_shift(explode('?', $documentUri));
@@ -58,9 +58,6 @@ function addMetadata($data, &$Config, $types, $facets){
   }
   if($documentUri!=$datasetUri){
     $DocumentGraph->setResource(void_ns.'inDataset', $datasetUri);
-    foreach($facets as $facet){
-    
-    }
   } else {
     $DocumentGraph->setResource(rdf_ns.'type', void_ns.'Dataset');
     foreach($types as $type => $entities){
@@ -68,6 +65,12 @@ function addMetadata($data, &$Config, $types, $facets){
       $classPartition->setResource(void_ns.'class', $type);
       $classPartition->setLiteral(void_ns.'entities', $entities);
     }
+
+    foreach($namespaces as   $ns => $n){
+        $vocabUri = preg_replace('@#$@', '',$ns);
+        $DocumentGraph->setResource(void_ns.'vocabulary', $vocabUri);
+    }
+
   }
   if(!empty($Config->license)){
     $DocumentGraph->setResource(dcterms_ns.'license', $Config->license);

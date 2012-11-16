@@ -1,13 +1,6 @@
 #TODO list
 
-* bin/ scripts for loading/resetting from commandline (in case php.ini
-  settings too low)
-* icons for related/near/similar/less than/greater than
-* VoID
-* get namespaces to autopopulate setup form
 * configurable facets ? or is there some way to choose them more
   intelligently ?
-* _dataset to conneg to void for rdf, and html to be clickable bar charts
-  of facets
 * caching clientside and server side
 
