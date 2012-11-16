@@ -17,11 +17,9 @@ function getLicenses(){
   );
 }
 
-function getConfig($redirectIfNotExists=true){
+function getConfig(){
   if(is_readable(CONFIG_JSON_FILE)){
     return json_decode(file_get_contents(CONFIG_JSON_FILE));
-  } else if($redirectIfNotExists) {
-    redirect('_setup');
   } else {
     return new Config();
   }
@@ -32,6 +30,15 @@ function redirect($page){
       $uri   = rtrim(dirname($_SERVER['PHP_SELF']), '/\\');
       header("Location: http://$host$uri/$page");
       exit;
+}
+
+function serveErrorPage($message){
+    $innerTemplate='error.html';
+    $title = 'Error';
+    $site_name = 'Trilby';
+    $showMap = false;
+    require 'templates/outer.html';
+    exit;
 }
 
 function getPrefixes(&$Config,&$Store){
@@ -96,6 +103,16 @@ function getPrefixes(&$Config,&$Store){
     return urlencode($v);
   }
 
+  function depiction(&$props, $uri='Something'){
+    global $prefixes;
+    extract($prefixes);
+    if(isset($props[$foaf.'depiction'])){
+      $pic = $props[$foaf.'depiction'][0]['value'];
+      unset($props[$foaf.'depiction']);
+      return $pic;
+    }
+    return false;
+  }
 
 function label(&$props, $uri='Something'){
   global $prefixes;

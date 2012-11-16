@@ -4,6 +4,8 @@ require 'vendor/kwijibo/raffles/lib/rafflesstore.php';
 require 'helpers.php';
 
 $Config = getConfig();
+if(empty($Config->name)) redirect('_setup');
+
 $Store = new \Raffles\RafflesStore(RAFFLES_DATA_DIR);
 
 $site_name = $Config->name;
@@ -17,7 +19,7 @@ $page = 1;
 $pageSize = !empty($_GET['_pageSize'])? $_GET['_pageSize'] : 10;
 $offset = (isset($_GET['_page']) && $page = $_GET['_page'])? ($_GET['_page']-1)*$pageSize : 0;
 $data=array();
-
+$base = dirname($_SERVER['REQUEST_URI']).'/';
 if($query = getQuery()){
   $data = $Store->query($query, $pageSize, $offset);
 } else if(!empty($_GET['_uri'])){

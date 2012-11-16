@@ -38,14 +38,15 @@
   ?>
   <ol>
     <?php foreach($data as $uri => $props):
-      $itemCount++;
+    $itemCount++;
+    $label = label($props, $uri);
     ?>
     <li>
       <div class="result" id="<?php echo urlencode($uri)?>">
-        <h4><a href="<?php echo $uri?>"><?php echo label($props, $uri)?></a></h4>
+        <h4><a href="<?php echo $uri?>"><?php echo $label ?></a></h4>
         <?php if(isset($props[Geo_NS.'lat'])):?>
         <?php if(!$showMap):?>
-        (<a class="nearby" href="?_near=<?php echo urlencode($uri)?>">Near By</a>)
+        <a class="nearby" href="?_near=<?php echo urlencode($uri)?>"><img alt="Near by" src="images/map-pin.png" width="25"></a>
         <?php else:?>
         <a href="#map">Map</a>
         <?php endif ?>
@@ -53,14 +54,20 @@
         <script type="text/javascript" charset="utf-8">
           var lat = <?php echo $props[Geo_NS.'lat'][0]['value']?>;
           var long = <?php echo $props[Geo_NS.'long'][0]['value']?>;
-var marker = L.marker([lat,long], {title: "<?php echo addslashes(label($props, $uri))?>" })
-          .bindPopup('<a href="#<?php echo urlencode($uri)?>"><?php echo addslashes(label($props, $uri))?></a>')
+var marker = L.marker([lat,long], {title: "<?php echo addslashes($label)?>" })
+          .bindPopup('<a href="#<?php echo urlencode($uri)?>"><?php echo addslashes($label)?></a>')
           .addTo(map);
 
           latlongs.push([lat,long]);
 
         </script>
 
+        <?php endif ?>
+
+        <?php if($depiction = depiction($props,$uri)):?>
+          <div class="pic">
+            <a href="<?php echo $depiction?>"><img src="<?php echo $depiction?>" width="300"></a>
+          </div>
         <?php endif ?>
         <dl>
           <?php foreach($props as $p => $os):?>
@@ -71,16 +78,14 @@ var marker = L.marker([lat,long], {title: "<?php echo addslashes(label($props, $
 
               <span class="facet-navigation">
               <?php if(is_numeric($o['value'])):?>
-              <a title="less than" href="?<?php echo getQuery().'&amp;'.
-                curie($p).';_max='.pathescape($o)?>">&lt;</a>
+              <a title="less than" href="?<?php echo curie($p).';_max='.pathescape($o)?>">&lt;</a>
               <?php endif?>
             
-              <a title="more like this" class="similar" href="?<?php echo
-                  curie($p).'='.pathescape($o)?>">&rarr;</a> 
+              <a title="More with this property" class="similar" href="?<?php echo
+                curie($p).'='.pathescape($o)?>">+</a> 
    
                 <?php if(is_numeric($o['value'])):?>
-              <a title="more than" href="?<?php echo getQuery().'&amp;'.
-                curie($p).';_min='.pathescape($o)?>">&gt;</a>
+              <a title="more than" href="?<?php echo curie($p).';_min='.pathescape($o)?>">&gt;</a>
               <?php endif?>
               </span>
 
@@ -111,6 +116,9 @@ var marker = L.marker([lat,long], {title: "<?php echo addslashes(label($props, $
 <section id="nav">
 <section id="facets">
   <?php if(isset($facets)):
+    unset($facets[Geo_NS.'lat']);
+    unset($facets[Geo_NS.'long']);
+    unset($facets[Geo_NS.'lat_long']);
     foreach($facets as $p => $objs):?>
   <section class="facet">
     <h4><?php echo local($p)?></h4>

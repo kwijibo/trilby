@@ -1,11 +1,12 @@
 <?php
-ini_set('upload_max_filesize', '30M');
 set_time_limit(0);
 define('RAFFLES_ROOT', __DIR__.'/vendor/kwijibo/raffles/');
 require 'vendor/kwijibo/raffles/lib/rafflesstore.php';
 include 'vendor/autoload.php';
 
 require 'helpers.php';
+
+class SetupException extends Exception {}
 
 function savePostToConfig(){
   $config = array(
@@ -35,12 +36,12 @@ function savePostToConfig(){
   try {
     file_put_contents(CONFIG_JSON_FILE, json_encode($config));
   } catch(Exception $e){
-    echo "The webserver does not have permission to write your config file in this directory. ";
+    throw new SetupException("The webserver does not have permission to write your config file in this directory. ");
   }
 }
 
 function uploadData(){
-  if( ( isset($_POST['upload']) ) && isset($_FILES['data-file'])){
+  if(!empty($_FILES['data-file']['name'])){
     if($_FILES['data-file']['error']){
     //handle error
       switch($_FILES['data-file']['error']){
@@ -65,7 +66,7 @@ function uploadData(){
           $errorMessage='A PHP extension stopped the file upload. PHP does not provide a way to ascertain which extension caused the file upload to stop; examining the list of loaded extensions with phpinfo() may help.';
           break;
       }
-      echo $errorMessage;
+      throw new SetupException($errorMessage);
 
     } else {
       $Store = new \Raffles\RafflesStore(RAFFLES_DATA_DIR);
@@ -73,7 +74,9 @@ function uploadData(){
       $Store->indexPredicates = false;
       $extension = false;
       if(strpos($_FILES['data-file']['name'],'.')){
-        $extension = array_pop(explode('.', $_FILES['data-file']['name']));
+
+        $file_name_parts = explode('.', $_FILES['data-file']['name']);
+        $extension = array_pop($file_name_parts);
       }
       $Store->loadDataFile($_FILES['data-file']['tmp_name'], $extension);
       
@@ -81,7 +84,24 @@ function uploadData(){
   }
 }
 
-$Config = getConfig(0);
+function return_bytes($val) {
+    $val = trim($val);
+    $last = strtolower($val[strlen($val)-1]);
+    switch($last) {
+        // The 'G' modifier is available since PHP 5.1.0
+        case 'g':
+            $val *= 1024;
+        case 'm':
+            $val *= 1024;
+        case 'k':
+            $val *= 1024;
+    }
+
+    return $val;
+}
+
+$Config = getConfig();
+
 /* authenticate*/
 if(
   !empty($Config->password) && !empty($Config->username)
@@ -99,12 +119,21 @@ if(
       echo 'You need to log in to access the setup page. If you have forgotton your password, delete "config.json" from your Trilby installation folder.';
       exit;
 }
+
 if($_SERVER['REQUEST_METHOD']=='POST'){
-  savePostToConfig();
-  uploadData();
+  if(empty($_POST)){
+    serveErrorPage('File too big');
+  }
+  try {
+    savePostToConfig();
+    uploadData();
+  } catch(SetupException $e){
+    var_dump($e);
+    serveErrorPage($e->getMessage());
+  }
   redirect('_setup');
 } else {
-   $maxfileSize = ini_get('upload_max_filesize');
+   $maxfileSize = return_bytes(ini_get('upload_max_filesize'));
    $Store = new \Raffles\RafflesStore(RAFFLES_DATA_DIR);
    $ns = $Store->getNamespaces();
 

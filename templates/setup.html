@@ -14,14 +14,14 @@
   
   <fieldset>
     <legend>Upload your Data</legend>
+    <!-- <input type="hidden" name="MAX_FILE_SIZE" value="<?php echo $maxfileSize ?>">-->
     <label for="data-file">Turtle or RDF/XML File:</label> <input id="data-file" name="data-file" type="file"><br>
     <input type="submit" name="upload" value="Upload" id="upload-button">
   </fieldset>
 
   <fieldset>
     <legend>Describe your data</legend>
-  <input type="hidden" name="MAX_FILE_SIZE" value="<?php echo $maxfileSize ?>">
-  <label for="name">Name:</label> <input id="name" name="name"
+    <label for="name">Name:</label> <input id="name" name="name"
   value="<?php echo $Config->name?>" placeholder="Your dataset's name"><br>
   <label for="license">Data License URL:</label> 
   <input id="license" name="license" value="<?php echo $Config->license

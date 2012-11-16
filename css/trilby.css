@@ -267,5 +267,6 @@ padding-bottom: 0.5em;
   }
 
 span.facet-navigation a {
-  font-family: "Reenie Beanie", serif ;
+  font-family: "Monaco", fixed-width ;
+  font-weight: normal;
 }
